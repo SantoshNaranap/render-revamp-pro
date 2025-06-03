@@ -1,11 +1,10 @@
-
 import { Layout } from "@/components/Layout"
 import { DataSourcesList } from "@/components/playground/DataSourcesList"
 import { ChatInterface } from "@/components/playground/ChatInterface"
 import { BotConfiguration } from "@/components/playground/BotConfiguration"
 import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Flask, Database, MessageSquare, Settings } from "lucide-react"
+import { Beaker, Database, MessageSquare, Settings } from "lucide-react"
 
 export interface DataSource {
   id: string
@@ -44,7 +43,7 @@ const Playground = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30">
-              <Flask className="h-6 w-6 text-purple-400" />
+              <Beaker className="h-6 w-6 text-purple-400" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-foreground">AI Lab</h1>
