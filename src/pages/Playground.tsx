@@ -1,10 +1,8 @@
 
 import { Layout } from "@/components/Layout"
-import { DataSourcesList } from "@/components/playground/DataSourcesList"
 import { ChatInterface } from "@/components/playground/ChatInterface"
 import { BotConfiguration } from "@/components/playground/BotConfiguration"
 import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export interface DataSource {
   id: string
@@ -26,13 +24,13 @@ export interface BotConfig {
 }
 
 const Playground = () => {
-  const [selectedDataSource, setSelectedDataSource] = useState<DataSource | null>(null)
+  const [selectedDataSources, setSelectedDataSources] = useState<DataSource[]>([])
   const [botConfig, setBotConfig] = useState<BotConfig>({
     model: "gpt-4o-mini",
     temperature: 0.7,
     maxTokens: 1000,
     topP: 0.9,
-    instructions: "You are a helpful assistant. Answer questions based on the provided data source.",
+    instructions: "You are a helpful assistant. Answer questions based on the provided data sources.",
     integrations: []
   })
 
@@ -47,33 +45,23 @@ const Playground = () => {
           </div>
         </div>
 
-        {/* Main Content - Responsive Layout */}
-        <div className="space-y-6">
-          {/* Top Row - Data Sources */}
-          <div className="w-full">
-            <DataSourcesList 
-              selectedDataSource={selectedDataSource}
-              onSelectDataSource={setSelectedDataSource}
+        {/* Main Content - Side by Side Layout */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-[calc(100vh-200px)]">
+          {/* Chat Interface */}
+          <div className="h-full">
+            <ChatInterface 
+              selectedDataSources={selectedDataSources}
+              onSelectDataSources={setSelectedDataSources}
+              botConfig={botConfig}
             />
           </div>
 
-          {/* Bottom Row - Chat and Configuration */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {/* Chat Interface */}
-            <div className="min-h-[600px]">
-              <ChatInterface 
-                selectedDataSource={selectedDataSource}
-                botConfig={botConfig}
-              />
-            </div>
-
-            {/* Configuration Panel */}
-            <div className="min-h-[600px]">
-              <BotConfiguration 
-                config={botConfig}
-                onConfigChange={setBotConfig}
-              />
-            </div>
+          {/* Configuration Panel */}
+          <div className="h-full">
+            <BotConfiguration 
+              config={botConfig}
+              onConfigChange={setBotConfig}
+            />
           </div>
         </div>
       </div>
