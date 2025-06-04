@@ -8,7 +8,8 @@ import {
   Settings, 
   Sparkles,
   HelpCircle,
-  ChevronDown
+  ChevronDown,
+  Bot
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
@@ -40,6 +41,12 @@ const navigationItems = [
     url: "/chat", 
     icon: MessageSquare,
     badge: "3"
+  },
+  { 
+    title: "Bots", 
+    url: "/bots", 
+    icon: Bot,
+    badge: null
   },
   { 
     title: "Playground", 

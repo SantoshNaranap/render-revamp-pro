@@ -9,6 +9,7 @@ import Playground from "./pages/Playground";
 import NotFound from "./pages/NotFound";
 import DataSources from "./pages/DataSources";
 import AddDataSource from "./pages/AddDataSource";
+import Bots from "./pages/Bots";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/chat" element={<Index />} />
+          <Route path="/bots" element={<Bots />} />
           <Route path="/playground" element={<Playground />} />
           <Route path="/data-sources" element={<DataSources />} />
           <Route path="/data-sources/add" element={<AddDataSource />} />
