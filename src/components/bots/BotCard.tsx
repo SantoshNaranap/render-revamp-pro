@@ -3,8 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Bot, MessageSquare, Target, Calendar, Code, Settings, Play, Pause } from "lucide-react"
+import { Bot, MessageSquare, Target, Calendar, Code, Settings, Play, Pause, Edit } from "lucide-react"
 import { CodeSnippetDialog } from "./CodeSnippetDialog"
+import { BotEditDialog } from "./BotEditDialog"
 import { useState } from "react"
 
 interface Bot {
@@ -24,6 +25,7 @@ interface BotCardProps {
 
 export function BotCard({ bot }: BotCardProps) {
   const [showCodeDialog, setShowCodeDialog] = useState(false)
+  const [showEditDialog, setShowEditDialog] = useState(false)
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -32,6 +34,11 @@ export function BotCard({ bot }: BotCardProps) {
       case "training": return "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
       default: return "bg-gray-500/10 text-gray-400 border-gray-500/20"
     }
+  }
+
+  const handleSaveBotConfig = (botId: string, config: any) => {
+    console.log('Saving bot config for bot:', botId, config)
+    // Here you would typically make an API call to save the configuration
   }
 
   return (
@@ -99,6 +106,13 @@ export function BotCard({ bot }: BotCardProps) {
               <Code className="w-4 h-4" />
               Get Code
             </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowEditDialog(true)}
+            >
+              <Edit className="w-4 h-4" />
+            </Button>
             <Button variant="outline" size="sm">
               <Settings className="w-4 h-4" />
             </Button>
@@ -113,6 +127,13 @@ export function BotCard({ bot }: BotCardProps) {
         bot={bot}
         open={showCodeDialog}
         onClose={() => setShowCodeDialog(false)}
+      />
+
+      <BotEditDialog
+        bot={bot}
+        open={showEditDialog}
+        onClose={() => setShowEditDialog(false)}
+        onSave={handleSaveBotConfig}
       />
     </>
   )
