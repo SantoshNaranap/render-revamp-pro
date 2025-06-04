@@ -38,7 +38,7 @@ const Playground = () => {
 
   return (
     <Layout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -47,30 +47,33 @@ const Playground = () => {
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
-          {/* Data Sources Panel */}
-          <div className="lg:col-span-1">
+        {/* Main Content - Responsive Layout */}
+        <div className="space-y-6">
+          {/* Top Row - Data Sources */}
+          <div className="w-full">
             <DataSourcesList 
               selectedDataSource={selectedDataSource}
               onSelectDataSource={setSelectedDataSource}
             />
           </div>
 
-          {/* Chat Interface */}
-          <div className="lg:col-span-1">
-            <ChatInterface 
-              selectedDataSource={selectedDataSource}
-              botConfig={botConfig}
-            />
-          </div>
+          {/* Bottom Row - Chat and Configuration */}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {/* Chat Interface */}
+            <div className="min-h-[600px]">
+              <ChatInterface 
+                selectedDataSource={selectedDataSource}
+                botConfig={botConfig}
+              />
+            </div>
 
-          {/* Configuration Panel */}
-          <div className="lg:col-span-1">
-            <BotConfiguration 
-              config={botConfig}
-              onConfigChange={setBotConfig}
-            />
+            {/* Configuration Panel */}
+            <div className="min-h-[600px]">
+              <BotConfiguration 
+                config={botConfig}
+                onConfigChange={setBotConfig}
+              />
+            </div>
           </div>
         </div>
       </div>
