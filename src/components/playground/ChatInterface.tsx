@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { Send, MessageSquare, Bot, User, Database, X } from "lucide-react"
+import { Send, MessageSquare, Bot, User, Database, X, Mic, MicOff } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { DataSource, BotConfig } from "@/pages/Playground"
 import { DataSourceModal } from "./DataSourceModal"
@@ -26,6 +26,8 @@ export function ChatInterface({ selectedDataSources, onSelectDataSources, botCon
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -71,6 +73,52 @@ export function ChatInterface({ selectedDataSources, onSelectDataSources, botCon
 
   const removeDataSource = (dataSourceId: string) => {
     onSelectDataSources(selectedDataSources.filter(ds => ds.id !== dataSourceId))
+  }
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const recorder = new MediaRecorder(stream)
+      const audioChunks: BlobPart[] = []
+
+      recorder.ondataavailable = (event) => {
+        audioChunks.push(event.data)
+      }
+
+      recorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
+        // Here you would typically send the audio to a speech-to-text service
+        // For now, we'll simulate the transcription
+        setTimeout(() => {
+          setInputValue("This is a simulated transcription of your voice input.")
+        }, 500)
+        
+        // Clean up the stream
+        stream.getTracks().forEach(track => track.stop())
+      }
+
+      recorder.start()
+      setMediaRecorder(recorder)
+      setIsRecording(true)
+    } catch (error) {
+      console.error('Error accessing microphone:', error)
+    }
+  }
+
+  const stopRecording = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop()
+      setMediaRecorder(null)
+      setIsRecording(false)
+    }
+  }
+
+  const toggleRecording = () => {
+    if (isRecording) {
+      stopRecording()
+    } else {
+      startRecording()
+    }
   }
 
   return (
@@ -205,6 +253,29 @@ export function ChatInterface({ selectedDataSources, onSelectDataSources, botCon
               disabled={selectedDataSources.length === 0 || isLoading}
               className="flex-1 bg-background/60 border-border/60"
             />
+            
+            {/* Microphone Button */}
+            <Button 
+              onClick={toggleRecording}
+              disabled={selectedDataSources.length === 0}
+              size="sm"
+              variant={isRecording ? "destructive" : "outline"}
+              className={`gap-2 ${isRecording ? 'animate-pulse' : ''}`}
+            >
+              {isRecording ? (
+                <>
+                  <MicOff className="h-4 w-4" />
+                  <div className="flex space-x-1">
+                    <div className="w-1 h-4 bg-current rounded-full animate-pulse"></div>
+                    <div className="w-1 h-4 bg-current rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-1 h-4 bg-current rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
+                </>
+              ) : (
+                <Mic className="h-4 w-4" />
+              )}
+            </Button>
+            
             <Button 
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || selectedDataSources.length === 0 || isLoading}
@@ -214,6 +285,15 @@ export function ChatInterface({ selectedDataSources, onSelectDataSources, botCon
               <Send className="h-4 w-4" />
             </Button>
           </div>
+          
+          {/* Recording Status */}
+          {isRecording && (
+            <div className="mt-2 text-center">
+              <p className="text-xs text-muted-foreground animate-pulse">
+                🎤 Recording... Click the microphone again to stop
+              </p>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
