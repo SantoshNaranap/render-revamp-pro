@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Plus, Search, Filter } from "lucide-react"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function DataSourcesHeader() {
   const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate()
 
   return (
     <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -30,7 +32,11 @@ export function DataSourcesHeader() {
           Filter
         </Button>
         
-        <Button size="sm" className="gap-2">
+        <Button 
+          size="sm" 
+          className="gap-2"
+          onClick={() => navigate("/data-sources/add")}
+        >
           <Plus className="h-4 w-4" />
           Add Source
         </Button>

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import Index from "./pages/Index";
 import Playground from "./pages/Playground";
 import NotFound from "./pages/NotFound";
 import DataSources from "./pages/DataSources";
+import AddDataSource from "./pages/AddDataSource";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,7 @@ const App = () => (
           <Route path="/chat" element={<Index />} />
           <Route path="/playground" element={<Playground />} />
           <Route path="/data-sources" element={<DataSources />} />
+          <Route path="/data-sources/add" element={<AddDataSource />} />
           <Route path="/analytics" element={<Index />} />
           <Route path="/settings" element={<Index />} />
           <Route path="/help" element={<Index />} />
