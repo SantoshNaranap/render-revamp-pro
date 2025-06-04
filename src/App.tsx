@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import DataSources from "./pages/DataSources";
 import AddDataSource from "./pages/AddDataSource";
 import Bots from "./pages/Bots";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +28,7 @@ const App = () => (
           <Route path="/data-sources" element={<DataSources />} />
           <Route path="/data-sources/add" element={<AddDataSource />} />
           <Route path="/analytics" element={<Index />} />
-          <Route path="/settings" element={<Index />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/help" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
