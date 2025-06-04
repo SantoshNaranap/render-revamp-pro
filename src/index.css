@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -9,41 +10,41 @@
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
 
-    --card: 240 10% 3.9%;
+    --card: 240 10% 5.9%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 3.9%;
+    --popover: 240 10% 5.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 270 91% 65%;
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 240 4.8% 18.9%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 240 4.8% 15.9%;
+    --muted-foreground: 240 5% 74.9%;
 
-    --accent: 270 91% 65%;
+    --accent: 240 4.8% 18.9%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 270 91% 65%;
+    --border: 240 3.7% 18.9%;
+    --input: 240 3.7% 18.9%;
+    --ring: 262 83% 58%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 240 10% 3.9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 270 91% 65%;
+    --sidebar-primary: 262 83% 58%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent: 240 4.8% 18.9%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 270 91% 65%;
+    --sidebar-border: 240 3.7% 18.9%;
+    --sidebar-ring: 262 83% 58%;
   }
 }
 
@@ -55,12 +56,13 @@
   body {
     @apply bg-background text-foreground font-inter antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(240 10% 2.9%) 100%);
   }
 
-  /* Improved scrollbar styling */
+  /* Professional scrollbar styling */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -68,11 +70,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-border/40 rounded-full;
+    @apply bg-border/60 rounded-full;
+    background: linear-gradient(135deg, hsl(var(--border)) 0%, hsl(var(--muted)) 100%);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-border/60;
+    @apply bg-border/80;
   }
 }
 
@@ -82,7 +85,7 @@
   }
   
   .gradient-border {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 50%, transparent 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)/0.7) 50%, transparent 100%);
     padding: 1px;
     border-radius: var(--radius);
   }
@@ -94,11 +97,46 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .glass-effect {
+    backdrop-filter: blur(16px);
+    background: hsla(var(--card), 0.8);
+    border: 1px solid hsla(var(--border), 0.6);
+  }
+
+  .professional-shadow {
+    box-shadow: 
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
+
+  .professional-shadow-lg {
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(255, 255, 255, 0.02);
+  }
 }
 
 /* Enhanced focus styles for better accessibility */
 @layer components {
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-primary-foreground professional-shadow transition-all duration-200;
+  }
+
+  .card-elevated {
+    @apply glass-effect professional-shadow-lg;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)/0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
