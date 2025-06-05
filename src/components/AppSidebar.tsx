@@ -30,15 +30,15 @@ import { Badge } from "@/components/ui/badge"
 
 const navigationItems = [
   { 
-    title: "Bots", 
-    url: "/bots", 
-    icon: Bot,
-    badge: null
-  },
-  { 
     title: "Playground", 
     url: "/playground", 
     icon: Sparkles,
+    badge: null
+  },
+  { 
+    title: "Bots", 
+    url: "/bots", 
+    icon: Bot,
     badge: null
   },
 ]
