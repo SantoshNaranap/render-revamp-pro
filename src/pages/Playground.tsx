@@ -23,6 +23,14 @@ export interface BotConfig {
   integrations: string[]
 }
 
+export interface VoiceConfig {
+  enabled: boolean
+  voice: string
+  speed: number
+  pitch: number
+  volume: number
+}
+
 const Playground = () => {
   const [selectedDataSources, setSelectedDataSources] = useState<DataSource[]>([])
   const [botConfig, setBotConfig] = useState<BotConfig>({
@@ -32,6 +40,13 @@ const Playground = () => {
     topP: 0.9,
     instructions: "You are a helpful assistant. Answer questions based on the provided data sources.",
     integrations: []
+  })
+  const [voiceConfig, setVoiceConfig] = useState<VoiceConfig>({
+    enabled: false,
+    voice: "alloy",
+    speed: 1.0,
+    pitch: 1.0,
+    volume: 0.8
   })
 
   return (
@@ -53,6 +68,8 @@ const Playground = () => {
               selectedDataSources={selectedDataSources}
               onSelectDataSources={setSelectedDataSources}
               botConfig={botConfig}
+              voiceConfig={voiceConfig}
+              onVoiceConfigChange={setVoiceConfig}
             />
           </div>
 

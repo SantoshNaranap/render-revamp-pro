@@ -1,18 +1,20 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { Send, MessageSquare, Bot, User, Database, X, Mic, MicOff } from "lucide-react"
+import { Send, MessageSquare, Bot, User, Database, X, Mic, MicOff, Volume2 } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
-import { DataSource, BotConfig } from "@/pages/Playground"
+import { DataSource, BotConfig, VoiceConfig } from "@/pages/Playground"
 import { DataSourceModal } from "./DataSourceModal"
+import { VoiceSelectionModal } from "./VoiceSelectionModal"
 
 interface ChatInterfaceProps {
   selectedDataSources: DataSource[]
   onSelectDataSources: (dataSources: DataSource[]) => void
   botConfig: BotConfig
+  voiceConfig: VoiceConfig
+  onVoiceConfigChange: (config: VoiceConfig) => void
 }
 
 interface Message {
@@ -22,7 +24,7 @@ interface Message {
   timestamp: Date
 }
 
-export function ChatInterface({ selectedDataSources, onSelectDataSources, botConfig }: ChatInterfaceProps) {
+export function ChatInterface({ selectedDataSources, onSelectDataSources, botConfig, voiceConfig, onVoiceConfigChange }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -129,19 +131,30 @@ export function ChatInterface({ selectedDataSources, onSelectDataSources, botCon
           Chat Interface
         </CardTitle>
         
-        {/* Data Sources Selection */}
+        {/* Data Sources and Voice Selection */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Data Sources</span>
-            <DataSourceModal 
-              selectedDataSources={selectedDataSources}
-              onSelectDataSources={onSelectDataSources}
-            >
-              <Button variant="outline" size="sm" className="gap-2">
-                <Database className="h-4 w-4" />
-                {selectedDataSources.length === 0 ? 'Select Sources' : `${selectedDataSources.length} Selected`}
-              </Button>
-            </DataSourceModal>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <DataSourceModal 
+                selectedDataSources={selectedDataSources}
+                onSelectDataSources={onSelectDataSources}
+              >
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Database className="h-4 w-4" />
+                  {selectedDataSources.length === 0 ? 'Select Sources' : `${selectedDataSources.length} Selected`}
+                </Button>
+              </DataSourceModal>
+
+              <VoiceSelectionModal
+                voiceConfig={voiceConfig}
+                onConfigChange={onVoiceConfigChange}
+              >
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Volume2 className="h-4 w-4" />
+                  Voice {voiceConfig.enabled ? 'On' : 'Off'}
+                </Button>
+              </VoiceSelectionModal>
+            </div>
           </div>
           
           {/* Selected Data Sources */}
