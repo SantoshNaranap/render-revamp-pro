@@ -1,3 +1,4 @@
+
 import { useState } from "react"
 import { 
   LayoutDashboard, 
@@ -8,8 +9,7 @@ import {
   Sparkles,
   HelpCircle,
   ChevronDown,
-  Bot,
-  Mic
+  Bot
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
@@ -28,8 +28,6 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { VoiceControlsPanel } from "./VoiceControlsPanel"
 
 const navigationItems = [
   { 
@@ -93,7 +91,6 @@ export function AppSidebar() {
   const location = useLocation()
   const currentPath = location.pathname
   const collapsed = state === "collapsed"
-  const [voiceControlsOpen, setVoiceControlsOpen] = useState(false)
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -183,28 +180,6 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        {/* Voice Controls Section */}
-        {!collapsed && (
-          <SidebarGroup>
-            <Collapsible open={voiceControlsOpen} onOpenChange={setVoiceControlsOpen}>
-              <CollapsibleTrigger asChild>
-                <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 cursor-pointer hover:text-foreground transition-colors flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Mic className="h-3 w-3" />
-                    Voice Controls
-                  </div>
-                  <ChevronDown className={`h-3 w-3 transition-transform ${voiceControlsOpen ? 'rotate-180' : ''}`} />
-                </SidebarGroupLabel>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-2">
-                <div className="px-2">
-                  <VoiceControlsPanel />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-          </SidebarGroup>
-        )}
 
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
