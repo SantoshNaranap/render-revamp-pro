@@ -1,4 +1,3 @@
-
 import { useState } from "react"
 import { 
   LayoutDashboard, 
@@ -30,18 +29,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 const navigationItems = [
-  { 
-    title: "Dashboard", 
-    url: "/", 
-    icon: LayoutDashboard,
-    badge: null
-  },
-  { 
-    title: "Chat", 
-    url: "/chat", 
-    icon: MessageSquare,
-    badge: "3"
-  },
   { 
     title: "Bots", 
     url: "/bots", 
