@@ -1,11 +1,14 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Theme = 'default' | 'blue' | 'green' | 'purple' | 'orange' | 'red' | 'light';
+type ThemeMode = 'dark' | 'light';
+type ThemeColor = 'default' | 'blue' | 'green' | 'purple' | 'orange' | 'red';
 
 interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  themeColor: ThemeColor;
+  themeMode: ThemeMode;
+  setThemeColor: (color: ThemeColor) => void;
+  setThemeMode: (mode: ThemeMode) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -43,10 +46,6 @@ const themeColors = {
     primary: '0 84% 60%',
     primaryForeground: '0 0% 98%',
   },
-  light: {
-    primary: '262 83% 58%',
-    primaryForeground: '0 0% 98%',
-  },
 };
 
 const lightThemeVariables = {
@@ -73,17 +72,47 @@ const lightThemeVariables = {
   sidebarBorder: '240 5.9% 90%',
 };
 
+const darkThemeVariables = {
+  background: '240 10% 3.9%',
+  foreground: '0 0% 98%',
+  card: '240 10% 5.9%',
+  cardForeground: '0 0% 98%',
+  popover: '240 10% 5.9%',
+  popoverForeground: '0 0% 98%',
+  secondary: '240 4.8% 18.9%',
+  secondaryForeground: '0 0% 98%',
+  muted: '240 4.8% 15.9%',
+  mutedForeground: '240 5% 74.9%',
+  accent: '240 4.8% 18.9%',
+  accentForeground: '0 0% 98%',
+  destructive: '0 84.2% 60.2%',
+  destructiveForeground: '0 0% 98%',
+  border: '240 3.7% 18.9%',
+  input: '240 3.7% 18.9%',
+  sidebarBackground: '240 10% 3.9%',
+  sidebarForeground: '0 0% 98%',
+  sidebarAccent: '240 4.8% 18.9%',
+  sidebarAccentForeground: '0 0% 98%',
+  sidebarBorder: '240 3.7% 18.9%',
+};
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem('app-theme');
-    return (saved as Theme) || 'default';
+  const [themeColor, setThemeColor] = useState<ThemeColor>(() => {
+    const savedColor = localStorage.getItem('app-theme-color');
+    return (savedColor as ThemeColor) || 'default';
+  });
+
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    const savedMode = localStorage.getItem('app-theme-mode');
+    return (savedMode as ThemeMode) || 'dark';
   });
 
   useEffect(() => {
-    localStorage.setItem('app-theme', theme);
+    localStorage.setItem('app-theme-color', themeColor);
+    localStorage.setItem('app-theme-mode', themeMode);
     
     const root = document.documentElement;
-    const colors = themeColors[theme];
+    const colors = themeColors[themeColor];
     
     // Set primary colors for all themes
     root.style.setProperty('--primary', colors.primary);
@@ -93,47 +122,16 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.style.setProperty('--ring', colors.primary);
     root.style.setProperty('--sidebar-ring', colors.primary);
 
-    // Apply light theme variables if light theme is selected
-    if (theme === 'light') {
-      Object.entries(lightThemeVariables).forEach(([key, value]) => {
-        const cssVar = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-        root.style.setProperty(`--${cssVar}`, value);
-      });
-    } else {
-      // Reset to dark theme variables for other themes
-      const darkThemeVariables = {
-        background: '240 10% 3.9%',
-        foreground: '0 0% 98%',
-        card: '240 10% 5.9%',
-        cardForeground: '0 0% 98%',
-        popover: '240 10% 5.9%',
-        popoverForeground: '0 0% 98%',
-        secondary: '240 4.8% 18.9%',
-        secondaryForeground: '0 0% 98%',
-        muted: '240 4.8% 15.9%',
-        mutedForeground: '240 5% 74.9%',
-        accent: '240 4.8% 18.9%',
-        accentForeground: '0 0% 98%',
-        destructive: '0 84.2% 60.2%',
-        destructiveForeground: '0 0% 98%',
-        border: '240 3.7% 18.9%',
-        input: '240 3.7% 18.9%',
-        sidebarBackground: '240 10% 3.9%',
-        sidebarForeground: '0 0% 98%',
-        sidebarAccent: '240 4.8% 18.9%',
-        sidebarAccentForeground: '0 0% 98%',
-        sidebarBorder: '240 3.7% 18.9%',
-      };
-
-      Object.entries(darkThemeVariables).forEach(([key, value]) => {
-        const cssVar = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-        root.style.setProperty(`--${cssVar}`, value);
-      });
-    }
-  }, [theme]);
+    // Apply theme mode variables
+    const modeVariables = themeMode === 'light' ? lightThemeVariables : darkThemeVariables;
+    Object.entries(modeVariables).forEach(([key, value]) => {
+      const cssVar = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      root.style.setProperty(`--${cssVar}`, value);
+    });
+  }, [themeColor, themeMode]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ themeColor, themeMode, setThemeColor, setThemeMode }}>
       {children}
     </ThemeContext.Provider>
   );

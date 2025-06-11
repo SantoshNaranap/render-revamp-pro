@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Palette } from 'lucide-react';
+import { Palette, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -18,36 +18,47 @@ const themes = [
   { value: 'purple', label: 'Royal Purple', color: 'hsl(271, 81%, 56%)' },
   { value: 'orange', label: 'Sunset Orange', color: 'hsl(25, 95%, 53%)' },
   { value: 'red', label: 'Crimson Red', color: 'hsl(0, 84%, 60%)' },
-  { value: 'light', label: 'Light Mode', color: 'hsl(0, 0%, 100%)' },
 ];
 
 export const ThemeSelector = () => {
-  const { theme, setTheme } = useTheme();
+  const { themeColor, themeMode, setThemeColor, setThemeMode } = useTheme();
 
   return (
-    <Select value={theme} onValueChange={setTheme}>
-      <SelectTrigger className="w-[180px] bg-background/60 border-border/60">
-        <div className="flex items-center gap-2">
-          <Palette className="h-4 w-4" />
-          <SelectValue placeholder="Select theme" />
-        </div>
-      </SelectTrigger>
-      <SelectContent className="bg-popover border-border z-50">
-        {themes.map((themeOption) => (
-          <SelectItem key={themeOption.value} value={themeOption.value}>
-            <div className="flex items-center gap-2">
-              <div 
-                className="w-3 h-3 rounded-full border border-border/20" 
-                style={{ 
-                  backgroundColor: themeOption.value === 'light' ? '#f8f9fa' : themeOption.color,
-                  border: themeOption.value === 'light' ? '1px solid #e9ecef' : 'none'
-                }}
-              />
-              {themeOption.label}
-            </div>
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="flex items-center gap-2">
+      <Select value={themeColor} onValueChange={setThemeColor}>
+        <SelectTrigger className="w-[180px] bg-background/60 border-border/60">
+          <div className="flex items-center gap-2">
+            <Palette className="h-4 w-4" />
+            <SelectValue placeholder="Select theme" />
+          </div>
+        </SelectTrigger>
+        <SelectContent className="bg-popover border-border z-50">
+          {themes.map((themeOption) => (
+            <SelectItem key={themeOption.value} value={themeOption.value}>
+              <div className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full border border-border/20" 
+                  style={{ backgroundColor: themeOption.color }}
+                />
+                {themeOption.label}
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => setThemeMode(themeMode === 'dark' ? 'light' : 'dark')}
+        className="p-2 hover:bg-accent/50"
+      >
+        {themeMode === 'dark' ? (
+          <Sun className="h-4 w-4" />
+        ) : (
+          <Moon className="h-4 w-4" />
+        )}
+      </Button>
+    </div>
   );
 };
