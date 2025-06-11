@@ -18,6 +18,7 @@ const themes = [
   { value: 'purple', label: 'Royal Purple', color: 'hsl(271, 81%, 56%)' },
   { value: 'orange', label: 'Sunset Orange', color: 'hsl(25, 95%, 53%)' },
   { value: 'red', label: 'Crimson Red', color: 'hsl(0, 84%, 60%)' },
+  { value: 'light', label: 'Light Mode', color: 'hsl(0, 0%, 100%)' },
 ];
 
 export const ThemeSelector = () => {
@@ -37,7 +38,10 @@ export const ThemeSelector = () => {
             <div className="flex items-center gap-2">
               <div 
                 className="w-3 h-3 rounded-full border border-border/20" 
-                style={{ backgroundColor: themeOption.color }}
+                style={{ 
+                  backgroundColor: themeOption.value === 'light' ? '#f8f9fa' : themeOption.color,
+                  border: themeOption.value === 'light' ? '1px solid #e9ecef' : 'none'
+                }}
               />
               {themeOption.label}
             </div>
