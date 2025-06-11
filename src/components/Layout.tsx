@@ -5,6 +5,7 @@ import { Bell, Search, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
+import { ThemeSelector } from "@/components/ThemeSelector"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -33,6 +34,8 @@ export function Layout({ children }: LayoutProps) {
             </div>
             
             <div className="flex items-center gap-3">
+              <ThemeSelector />
+              
               <Button variant="ghost" size="sm" className="relative hover:bg-accent/50">
                 <Bell className="h-4 w-4" />
                 <span className="absolute -top-1 -right-1 h-2 w-2 bg-red-500 rounded-full animate-pulse"></span>
