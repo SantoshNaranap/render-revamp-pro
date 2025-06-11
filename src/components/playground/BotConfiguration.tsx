@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -158,7 +157,7 @@ export function BotConfiguration({ config, onConfigChange }: BotConfigurationPro
               return (
                 <div
                   key={integration.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border/40 bg-card/60"
+                  className="flex items-center justify-between p-3 rounded-lg border border-border bg-background"
                 >
                   <div className="flex items-center gap-3">
                     <Icon className="h-4 w-4 text-primary" />
