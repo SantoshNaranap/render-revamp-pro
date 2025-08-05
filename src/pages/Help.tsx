@@ -77,7 +77,7 @@ const Help = () => {
                     <BookOpen className="h-5 w-5 text-primary" /> 
                     Getting Started
                   </CardTitle>
-                  <CardDescription>Learn the basics of the Oralia AI platform</CardDescription>
+                  <CardDescription>Learn the basics of the Kaaylabs AI platform</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
@@ -162,7 +162,7 @@ const Help = () => {
               <CardHeader>
                 <CardTitle>Frequently Asked Questions</CardTitle>
                 <CardDescription>
-                  Find answers to common questions about the Oralia AI platform
+                  Find answers to common questions about the Kaaylabs AI platform
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -178,7 +178,7 @@ const Help = () => {
                   <AccordionItem value="item-2">
                     <AccordionTrigger>What types of data sources can I connect?</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground">
-                      The Oralia platform supports various data sources including PDF documents, Word files, CSV data, 
+                      The Kaaylabs platform supports various data sources including PDF documents, Word files, CSV data, 
                       website URLs, API endpoints, and database connections. You can upload files directly through 
                       the Data Sources page or connect to external sources using our integration options.
                     </AccordionContent>
@@ -194,7 +194,7 @@ const Help = () => {
                   <AccordionItem value="item-4">
                     <AccordionTrigger>What are the billing and subscription options?</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground">
-                      Oralia offers flexible pricing tiers including Free, Professional, and Enterprise plans. 
+                      Kaaylabs offers flexible pricing tiers including Free, Professional, and Enterprise plans. 
                       Billing is based on usage metrics such as API calls, data storage, and advanced features.
                       Visit the Settings page and navigate to the Billing section to view your current plan, usage statistics, 
                       and available upgrade options.
@@ -220,7 +220,7 @@ const Help = () => {
               {/* Tutorial 1 */}
               <Card className="overflow-hidden">
                 <CardHeader className="p-4">
-                  <CardTitle className="text-lg">Getting Started with Oralia</CardTitle>
+                  <CardTitle className="text-lg">Getting Started with Kaaylabs</CardTitle>
                   <CardDescription>Complete platform walkthrough</CardDescription>
                 </CardHeader>
                 <div className="relative">
@@ -292,7 +292,7 @@ const Help = () => {
                     </div>
                     <div>
                       <h4 className="text-sm font-medium">Email Support</h4>
-                      <p className="text-sm text-muted-foreground">support@oralia.ai</p>
+                      <p className="text-sm text-muted-foreground">support@kaaylabs.ai</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -322,7 +322,7 @@ const Help = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>Community</CardTitle>
-                  <CardDescription>Connect with other Oralia users</CardDescription>
+                  <CardDescription>Connect with other Kaaylabs users</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="border rounded-lg p-4">

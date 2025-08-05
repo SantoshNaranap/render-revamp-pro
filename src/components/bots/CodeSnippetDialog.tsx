@@ -38,11 +38,11 @@ export function CodeSnippetDialog({ bot, open, onClose }: CodeSnippetDialogProps
     setTimeout(() => setCopied(null), 2000)
   }
 
-  const jsSnippet = `<!-- Oralia Bot Integration -->
+  const jsSnippet = `<!-- Kaaylabs Bot Integration -->
 <script>
   (function() {
     var script = document.createElement('script');
-    script.src = 'https://cdn.oralia.ai/widget.js';
+    script.src = 'https://cdn.kaaylabs.ai/widget.js';
     script.setAttribute('data-bot-id', '${bot.id}');
     script.setAttribute('data-bot-name', '${bot.name}');
     script.setAttribute('data-theme', 'light');
@@ -51,14 +51,14 @@ export function CodeSnippetDialog({ bot, open, onClose }: CodeSnippetDialogProps
   })();
 </script>`
 
-  const reactSnippet = `import { OraliaWidget } from '@oralia/react-widget';
+  const reactSnippet = `import { KaaylabsWidget } from '@kaaylabs/react-widget';
 
 function App() {
   return (
     <div>
       {/* Your app content */}
       
-      <OraliaWidget
+      <KaaylabsWidget
         botId="${bot.id}"
         botName="${bot.name}"
         theme="light"
@@ -70,11 +70,11 @@ function App() {
 }`
 
   const htmlSnippet = `<!-- Add this script tag to your HTML head -->
-<script src="https://cdn.oralia.ai/widget.js"></script>
+<script src="https://cdn.kaaylabs.ai/widget.js"></script>
 
 <!-- Add this div where you want the chat widget -->
 <div 
-  id="oralia-widget"
+  id="kaaylabs-widget"
   data-bot-id="${bot.id}"
   data-bot-name="${bot.name}"
   data-theme="light"
@@ -84,11 +84,11 @@ function App() {
 
 <script>
   // Initialize the widget
-  window.OraliaWidget.init();
+  window.KaaylabsWidget.init();
 </script>`
 
   const apiSnippet = `// Direct API Integration
-const response = await fetch('https://api.oralia.ai/v1/chat', {
+const response = await fetch('https://api.kaaylabs.ai/v1/chat', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ console.log(data.response);`
                 <code>{reactSnippet}</code>
               </pre>
               <p className="text-sm text-muted-foreground">
-                Install: <code className="bg-muted px-1 rounded">npm install @oralia/react-widget</code>
+                Install: <code className="bg-muted px-1 rounded">npm install @kaaylabs/react-widget</code>
               </p>
             </div>
           </TabsContent>
