@@ -13,6 +13,7 @@ import AddDataSource from "./pages/AddDataSource";
 import Bots from "./pages/Bots";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
+import Guide from "./pages/Guide";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/playground" element={<Playground />} />
             <Route path="/data-sources" element={<DataSources />} />
             <Route path="/data-sources/add" element={<AddDataSource />} />
+            <Route path="/guide" element={<Guide />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/help" element={<Help />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

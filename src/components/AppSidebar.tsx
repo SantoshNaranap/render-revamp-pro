@@ -31,6 +31,12 @@ import { Badge } from "@/components/ui/badge"
 
 const navigationItems = [
   { 
+    title: "Guide", 
+    url: "/guide", 
+    icon: LayoutDashboard,
+    badge: null
+  },
+  { 
     title: "Lab", 
     url: "/playground", 
     icon: Sparkles,
