@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { FileText, Globe, Zap, MoreHorizontal, Eye, Trash2, RefreshCw } from "lucide-react"
 import { useState } from "react"
+import { DataSourceStatusModal } from "./DataSourceStatusModal"
 
 export interface DataSource {
   id: string
@@ -117,80 +118,99 @@ const getStatusBadge = (status: string) => {
 
 export function DataSourcesTable() {
   const [dataSources] = useState<DataSource[]>(mockDataSources)
+  const [selectedDataSource, setSelectedDataSource] = useState<DataSource | null>(null)
+  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
+
+  const handleViewStatus = (dataSource: DataSource) => {
+    setSelectedDataSource(dataSource)
+    setIsStatusModalOpen(true)
+  }
 
   return (
-    <Card className="border-border/60 bg-card/40 backdrop-blur-sm">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">All Data Sources</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Documents</TableHead>
-              <TableHead>Size</TableHead>
-              <TableHead>Accuracy</TableHead>
-              <TableHead>Last Updated</TableHead>
-              <TableHead className="w-[100px]">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {dataSources.map((dataSource) => (
-              <TableRow key={dataSource.id}>
-                <TableCell>
-                  <div className="flex items-center space-x-3">
-                    {getTypeIcon(dataSource.type)}
-                    <div>
-                      <div className="font-medium text-foreground">{dataSource.name}</div>
-                      <div className="text-sm text-muted-foreground">{dataSource.description}</div>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline" className="capitalize">
-                    {dataSource.type}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  {getStatusBadge(dataSource.status)}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {dataSource.documentCount}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {dataSource.size}
-                </TableCell>
-                <TableCell>
-                  {dataSource.accuracy ? (
-                    <span className="text-green-400 font-medium">{dataSource.accuracy}%</span>
-                  ) : (
-                    <span className="text-muted-foreground">-</span>
-                  )}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {dataSource.lastUpdated}
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center space-x-2">
-                    <Button variant="ghost" size="sm">
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <RefreshCw className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </TableCell>
+    <>
+      <Card className="border-border/60 bg-card/40 backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold">All Data Sources</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Documents</TableHead>
+                <TableHead>Size</TableHead>
+                <TableHead>Accuracy</TableHead>
+                <TableHead>Last Updated</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+            </TableHeader>
+            <TableBody>
+              {dataSources.map((dataSource) => (
+                <TableRow key={dataSource.id}>
+                  <TableCell>
+                    <div className="flex items-center space-x-3">
+                      {getTypeIcon(dataSource.type)}
+                      <div>
+                        <div className="font-medium text-foreground">{dataSource.name}</div>
+                        <div className="text-sm text-muted-foreground">{dataSource.description}</div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="capitalize">
+                      {dataSource.type}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {getStatusBadge(dataSource.status)}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {dataSource.documentCount}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {dataSource.size}
+                  </TableCell>
+                  <TableCell>
+                    {dataSource.accuracy ? (
+                      <span className="text-green-400 font-medium">{dataSource.accuracy}%</span>
+                    ) : (
+                      <span className="text-muted-foreground">-</span>
+                    )}
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {dataSource.lastUpdated}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center space-x-2">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleViewStatus(dataSource)}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm">
+                        <RefreshCw className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      <DataSourceStatusModal
+        dataSource={selectedDataSource}
+        isOpen={isStatusModalOpen}
+        onClose={() => setIsStatusModalOpen(false)}
+      />
+    </>
   )
 }
