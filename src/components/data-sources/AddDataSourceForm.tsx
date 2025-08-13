@@ -33,7 +33,6 @@ export function AddDataSourceForm() {
 
   // Website form state
   const [websiteUrl, setWebsiteUrl] = useState("")
-  const [websiteDepth, setWebsiteDepth] = useState("2")
   const [websiteName, setWebsiteName] = useState("")
   const [crawledUrls, setCrawledUrls] = useState<{url: string, status: 'pending' | 'crawling' | 'completed' | 'failed', progress: number, selected: boolean}[]>([])
   const [isCrawling, setIsCrawling] = useState(false)
@@ -269,20 +268,6 @@ export function AddDataSourceForm() {
                     onChange={(e) => setWebsiteUrl(e.target.value)}
                     required
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="crawl-depth">Crawl Depth</Label>
-                  <Input
-                    id="crawl-depth"
-                    type="number"
-                    min="1"
-                    max="5"
-                    value={websiteDepth}
-                    onChange={(e) => setWebsiteDepth(e.target.value)}
-                  />
-                  <p className="text-sm text-muted-foreground">
-                    How many levels deep to crawl (1-5)
-                  </p>
                 </div>
                 <Button type="submit" disabled={isLoading || crawlingComplete} className="w-full">
                   {isLoading ? "Crawling Website..." : "Start Crawling"}
