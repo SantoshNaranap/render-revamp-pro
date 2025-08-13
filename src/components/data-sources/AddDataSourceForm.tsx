@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
+import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
 import { 
   Globe, 
@@ -34,8 +35,9 @@ export function AddDataSourceForm() {
   const [websiteUrl, setWebsiteUrl] = useState("")
   const [websiteDepth, setWebsiteDepth] = useState("2")
   const [websiteName, setWebsiteName] = useState("")
-  const [crawledUrls, setCrawledUrls] = useState<{url: string, status: 'pending' | 'crawling' | 'completed' | 'failed', progress: number}[]>([])
+  const [crawledUrls, setCrawledUrls] = useState<{url: string, status: 'pending' | 'crawling' | 'completed' | 'failed', progress: number, selected: boolean}[]>([])
   const [isCrawling, setIsCrawling] = useState(false)
+  const [crawlingComplete, setCrawlingComplete] = useState(false)
 
   // Database form state
   const [dbType, setDbType] = useState("postgresql")
@@ -72,8 +74,8 @@ export function AddDataSourceForm() {
       websiteUrl + "/careers"
     ]
     
-    // Initialize URLs with pending status
-    setCrawledUrls(mockUrls.map(url => ({ url, status: 'pending', progress: 0 })))
+    // Initialize URLs with pending status and selected by default
+    setCrawledUrls(mockUrls.map(url => ({ url, status: 'pending', progress: 0, selected: true })))
     
     // Simulate crawling each URL
     for (let i = 0; i < mockUrls.length; i++) {
@@ -102,14 +104,41 @@ export function AddDataSourceForm() {
     
     // Complete the process
     setTimeout(() => {
-      toast({
-        title: "Website Source Added",
-        description: `Successfully crawled ${mockUrls.length} pages from ${websiteUrl}`,
-      })
+      setCrawlingComplete(true)
       setIsLoading(false)
       setIsCrawling(false)
-      // navigate("/data-sources") - Don't navigate immediately so user can see results
+      toast({
+        title: "Crawling Complete",
+        description: `Found ${mockUrls.length} pages. Select which ones to include in your data source.`,
+      })
     }, mockUrls.length * 1000 + 2000)
+  }
+
+  const toggleUrlSelection = (index: number) => {
+    setCrawledUrls(prev => prev.map((item, i) => 
+      i === index ? { ...item, selected: !item.selected } : item
+    ))
+  }
+
+  const selectAllUrls = () => {
+    setCrawledUrls(prev => prev.map(item => ({ ...item, selected: true })))
+  }
+
+  const deselectAllUrls = () => {
+    setCrawledUrls(prev => prev.map(item => ({ ...item, selected: false })))
+  }
+
+  const removeUrl = (index: number) => {
+    setCrawledUrls(prev => prev.filter((_, i) => i !== index))
+  }
+
+  const finalizeDataSource = () => {
+    const selectedUrls = crawledUrls.filter(item => item.selected)
+    toast({
+      title: "Data Source Created",
+      description: `Successfully created data source with ${selectedUrls.length} selected pages.`,
+    })
+    navigate("/data-sources")
   }
 
   const handleDatabaseSubmit = async (e: React.FormEvent) => {
@@ -255,12 +284,12 @@ export function AddDataSourceForm() {
                     How many levels deep to crawl (1-5)
                   </p>
                 </div>
-                <Button type="submit" disabled={isLoading} className="w-full">
+                <Button type="submit" disabled={isLoading || crawlingComplete} className="w-full">
                   {isLoading ? "Crawling Website..." : "Start Crawling"}
                 </Button>
                 
-                {/* Crawled URLs Display */}
-                {isCrawling && crawledUrls.length > 0 && (
+                {/* Crawling Progress Display */}
+                {isCrawling && crawledUrls.length > 0 && !crawlingComplete && (
                   <Card className="mt-6 border-border/60 bg-card/40 backdrop-blur-sm">
                     <CardHeader>
                       <CardTitle className="text-lg">Crawling Progress</CardTitle>
@@ -293,6 +322,73 @@ export function AddDataSourceForm() {
                           )}
                         </div>
                       ))}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* URL Selection Interface */}
+                {crawlingComplete && crawledUrls.length > 0 && (
+                  <Card className="mt-6 border-border/60 bg-card/40 backdrop-blur-sm">
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-lg">Select URLs to Include</CardTitle>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" onClick={selectAllUrls}>
+                            Select All
+                          </Button>
+                          <Button variant="outline" size="sm" onClick={deselectAllUrls}>
+                            Deselect All
+                          </Button>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {crawledUrls.filter(item => item.selected).length} of {crawledUrls.length} URLs selected
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {crawledUrls.map((item, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 border rounded-lg bg-background/50">
+                          <div className="flex items-center gap-3">
+                            <Checkbox
+                              checked={item.selected}
+                              onCheckedChange={() => toggleUrlSelection(index)}
+                            />
+                            <div className="flex items-center gap-2">
+                              {item.status === 'completed' && <CheckCircle className="h-4 w-4 text-green-500" />}
+                              {item.status === 'failed' && <AlertCircle className="h-4 w-4 text-red-500" />}
+                              <span className="text-sm font-medium text-foreground">{item.url}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge 
+                              variant="outline" 
+                              className={
+                                item.status === 'completed' ? 'border-green-500/30 text-green-400' :
+                                'border-red-500/30 text-red-400'
+                              }
+                            >
+                              {item.status}
+                            </Badge>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeUrl(index)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      
+                      <div className="pt-4 border-t">
+                        <Button 
+                          onClick={finalizeDataSource}
+                          disabled={crawledUrls.filter(item => item.selected).length === 0}
+                          className="w-full"
+                        >
+                          Create Data Source ({crawledUrls.filter(item => item.selected).length} URLs)
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 )}
