@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
 import { useToast } from "@/hooks/use-toast"
 import { 
   Globe, 
@@ -16,7 +17,10 @@ import {
   Upload,
   ArrowLeft,
   Plus,
-  Trash2
+  Trash2,
+  CheckCircle,
+  Clock,
+  AlertCircle
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
@@ -30,6 +34,8 @@ export function AddDataSourceForm() {
   const [websiteUrl, setWebsiteUrl] = useState("")
   const [websiteDepth, setWebsiteDepth] = useState("2")
   const [websiteName, setWebsiteName] = useState("")
+  const [crawledUrls, setCrawledUrls] = useState<{url: string, status: 'pending' | 'crawling' | 'completed' | 'failed', progress: number}[]>([])
+  const [isCrawling, setIsCrawling] = useState(false)
 
   // Database form state
   const [dbType, setDbType] = useState("postgresql")
@@ -52,16 +58,58 @@ export function AddDataSourceForm() {
   const handleWebsiteSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setIsCrawling(true)
     
-    // Simulate API call
+    // Simulate discovering URLs and crawling process
+    const mockUrls = [
+      websiteUrl,
+      websiteUrl + "/about",
+      websiteUrl + "/services", 
+      websiteUrl + "/contact",
+      websiteUrl + "/blog",
+      websiteUrl + "/products",
+      websiteUrl + "/support",
+      websiteUrl + "/careers"
+    ]
+    
+    // Initialize URLs with pending status
+    setCrawledUrls(mockUrls.map(url => ({ url, status: 'pending', progress: 0 })))
+    
+    // Simulate crawling each URL
+    for (let i = 0; i < mockUrls.length; i++) {
+      setTimeout(() => {
+        setCrawledUrls(prev => prev.map((item, index) => 
+          index === i ? { ...item, status: 'crawling' } : item
+        ))
+        
+        // Simulate progress
+        let progress = 0
+        const progressInterval = setInterval(() => {
+          progress += 20
+          setCrawledUrls(prev => prev.map((item, index) => 
+            index === i ? { ...item, progress } : item
+          ))
+          
+          if (progress >= 100) {
+            clearInterval(progressInterval)
+            setCrawledUrls(prev => prev.map((item, index) => 
+              index === i ? { ...item, status: 'completed', progress: 100 } : item
+            ))
+          }
+        }, 200)
+      }, i * 1000)
+    }
+    
+    // Complete the process
     setTimeout(() => {
       toast({
         title: "Website Source Added",
-        description: `Successfully started crawling ${websiteUrl}`,
+        description: `Successfully crawled ${mockUrls.length} pages from ${websiteUrl}`,
       })
       setIsLoading(false)
-      navigate("/data-sources")
-    }, 2000)
+      setIsCrawling(false)
+      // navigate("/data-sources") - Don't navigate immediately so user can see results
+    }, mockUrls.length * 1000 + 2000)
   }
 
   const handleDatabaseSubmit = async (e: React.FormEvent) => {
@@ -210,6 +258,44 @@ export function AddDataSourceForm() {
                 <Button type="submit" disabled={isLoading} className="w-full">
                   {isLoading ? "Crawling Website..." : "Start Crawling"}
                 </Button>
+                
+                {/* Crawled URLs Display */}
+                {isCrawling && crawledUrls.length > 0 && (
+                  <Card className="mt-6 border-border/60 bg-card/40 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="text-lg">Crawling Progress</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      {crawledUrls.map((item, index) => (
+                        <div key={index} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              {item.status === 'pending' && <Clock className="h-4 w-4 text-muted-foreground" />}
+                              {item.status === 'crawling' && <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />}
+                              {item.status === 'completed' && <CheckCircle className="h-4 w-4 text-green-500" />}
+                              {item.status === 'failed' && <AlertCircle className="h-4 w-4 text-red-500" />}
+                              <span className="text-sm font-medium text-foreground">{item.url}</span>
+                            </div>
+                            <Badge 
+                              variant="outline" 
+                              className={
+                                item.status === 'completed' ? 'border-green-500/30 text-green-400' :
+                                item.status === 'crawling' ? 'border-yellow-500/30 text-yellow-400' :
+                                item.status === 'failed' ? 'border-red-500/30 text-red-400' :
+                                'border-gray-500/30 text-gray-400'
+                              }
+                            >
+                              {item.status}
+                            </Badge>
+                          </div>
+                          {item.status === 'crawling' && (
+                            <Progress value={item.progress} className="h-2" />
+                          )}
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
               </form>
             </TabsContent>
 
