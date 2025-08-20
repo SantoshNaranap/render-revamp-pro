@@ -11,7 +11,7 @@ const quickStartSteps = [
   {
     id: "create-bot",
     title: "Create Your First Bot",
-    description: "Set up your first AI bot to get started with Kaaylabs",
+    description: "Set up your first AI bot to get started with PamperedChef",
     icon: Bot,
     link: "/bots",
     completed: false,
@@ -96,7 +96,7 @@ export default function Guide() {
               <div>
                 <h1 className="text-4xl font-bold tracking-tight text-foreground mb-2">Quick Start Guide</h1>
                 <p className="text-xl text-muted-foreground">
-                  Get up and running with Kaaylabs in just {totalTime} minutes
+                  Get up and running with PamperedChef in just {totalTime} minutes
                 </p>
               </div>
             </div>
