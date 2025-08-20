@@ -7,7 +7,7 @@ import { BotCard } from "./BotCard"
 const mockBots = [
   {
     id: "1",
-    name: "Customer Support Bot",
+    name: "PamperedChef Customer Support Bot",
     description: "Handles customer inquiries and support tickets",
     status: "active" as const,
     conversations: 1247,
@@ -17,7 +17,7 @@ const mockBots = [
   },
   {
     id: "2", 
-    name: "Sales Assistant Bot",
+    name: "PamperedChef Sales Assistant Bot",
     description: "Helps qualify leads and schedule demos",
     status: "active" as const,
     conversations: 892,

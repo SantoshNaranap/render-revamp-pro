@@ -66,12 +66,12 @@ const dataItems = [
 ]
 
 const adminItems = [
-  { 
-    title: "Settings", 
-    url: "/settings", 
-    icon: Settings,
-    badge: null
-  },
+  // { 
+  //   title: "Settings", 
+  //   url: "/settings", 
+  //   icon: Settings,
+  //   badge: null
+  // },
   { 
     title: "Help", 
     url: "/help", 
@@ -109,7 +109,7 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <div>
-              <h2 className="text-lg font-bold text-foreground">Kaaylabs</h2>
+              <h2 className="text-lg font-bold text-foreground">PamperedChef</h2>
               <p className="text-xs text-muted-foreground">AI Platform</p>
             </div>
           )}

@@ -15,7 +15,7 @@ interface DataSourcesListProps {
 const mockDataSources: DataSource[] = [
   {
     id: "1",
-    name: "Product Documentation",
+    name: "PamperedChef CA",
     description: "Complete product documentation and user guides",
     status: "trained",
     documentCount: 156,
@@ -24,7 +24,7 @@ const mockDataSources: DataSource[] = [
   },
   {
     id: "2",
-    name: "Customer Support FAQ",
+    name: "PamperedChef US",
     description: "Frequently asked questions and support articles",
     status: "trained",
     documentCount: 89,
@@ -33,7 +33,7 @@ const mockDataSources: DataSource[] = [
   },
   {
     id: "3",
-    name: "Company Knowledge Base",
+    name: "PamperedChef-Product-Docs",
     description: "Internal knowledge base and procedures",
     status: "training",
     documentCount: 234,

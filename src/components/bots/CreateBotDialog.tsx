@@ -41,17 +41,17 @@ const availableModels = [
 ]
 
 const availableIntegrations = [
-  { id: "web-search", label: "Web Search" },
-  { id: "memory", label: "Conversation Memory" },
+  { id: "web-search", label: "Parcel Lab" },
+  { id: "memory", label: "Nice CXOne" },
   { id: "functions", label: "Function Calling" },
   { id: "multimodal", label: "Image Understanding" },
 ]
 
 const availableDataSources = [
-  { id: "faq-database", label: "FAQ Database" },
-  { id: "support-tickets", label: "Support Tickets" },
-  { id: "product-docs", label: "Product Documentation" },
-  { id: "product-catalog", label: "Product Catalog" },
+  { id: "faq-database", label: "PamperedChef CA" },
+  { id: "support-tickets", label: "PC-Support " },
+  { id: "product-docs", label: "PamperedChef-Product-Docs" },
+  { id: "product-catalog", label: "PamperedChef US" },
   { id: "pricing-data", label: "Pricing Data" },
   { id: "sales-scripts", label: "Sales Scripts" },
   { id: "employee-handbook", label: "Employee Handbook" },
