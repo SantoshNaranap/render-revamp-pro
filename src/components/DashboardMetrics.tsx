@@ -9,6 +9,7 @@ import {
   ArrowUpRight,
   ArrowDownRight
 } from "lucide-react"
+import { TimePeriod } from "@/components/TimePeriodFilter"
 
 interface MetricCardProps {
   title: string
@@ -17,6 +18,10 @@ interface MetricCardProps {
   change: string
   isPositive: boolean
   icon: React.ReactNode
+}
+
+interface DashboardMetricsProps {
+  timePeriod: TimePeriod
 }
 
 function MetricCard({ title, value, subtitle, change, isPositive, icon }: MetricCardProps) {
@@ -56,39 +61,75 @@ function MetricCard({ title, value, subtitle, change, isPositive, icon }: Metric
   )
 }
 
-export function DashboardMetrics() {
+export function DashboardMetrics({ timePeriod }: DashboardMetricsProps) {
+  // Mock data based on time period
+  const getMetricData = () => {
+    switch (timePeriod) {
+      case 'day':
+        return {
+          conversations: { value: "342", subtitle: "Last 24 hours", change: "8.2%" },
+          users: { value: "127", subtitle: "Active users today", change: "15.1%" },
+          retention: { value: "82.1%", subtitle: "Daily retention", change: "3.4%" },
+          dropOff: { value: "12.8%", subtitle: "Same-day exits", change: "-1.2%" }
+        }
+      case 'week':
+        return {
+          conversations: { value: "2,847", subtitle: "Last 7 days", change: "18.5%" },
+          users: { value: "1,653", subtitle: "Weekly active users", change: "12.3%" },
+          retention: { value: "78.2%", subtitle: "7-day retention rate", change: "5.7%" },
+          dropOff: { value: "15.4%", subtitle: "Weekly exits", change: "-2.1%" }
+        }
+      case 'month':
+        return {
+          conversations: { value: "12,847", subtitle: "Last 30 days", change: "24.7%" },
+          users: { value: "6,234", subtitle: "Monthly active users", change: "18.9%" },
+          retention: { value: "68.9%", subtitle: "30-day retention", change: "7.2%" },
+          dropOff: { value: "18.7%", subtitle: "Monthly exits", change: "-3.8%" }
+        }
+      case 'year':
+        return {
+          conversations: { value: "147,523", subtitle: "Last 12 months", change: "32.1%" },
+          users: { value: "28,945", subtitle: "Yearly active users", change: "28.4%" },
+          retention: { value: "61.3%", subtitle: "Annual retention", change: "11.5%" },
+          dropOff: { value: "22.1%", subtitle: "Annual exits", change: "-5.2%" }
+        }
+    }
+  }
+
+  const data = getMetricData()
+
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title="Total Conversations"
-        value="2,847"
-        subtitle="Today: 342 conversations"
-        change="18.5%"
+        value={data.conversations.value}
+        subtitle={data.conversations.subtitle}
+        change={data.conversations.change}
         isPositive={true}
         icon={<MessageSquare className="h-4 w-4" />}
       />
       <MetricCard
         title="Unique Users"
-        value="1,653"
-        subtitle="Monthly active users"
-        change="12.3%"
+        value={data.users.value}
+        subtitle={data.users.subtitle}
+        change={data.users.change}
         isPositive={true}
         icon={<Users className="h-4 w-4" />}
       />
       <MetricCard
         title="User Retention"
-        value="78.2%"
-        subtitle="7-day retention rate"
-        change="5.7%"
+        value={data.retention.value}
+        subtitle={data.retention.subtitle}
+        change={data.retention.change}
         isPositive={true}
         icon={<UserCheck className="h-4 w-4" />}
       />
       <MetricCard
         title="Drop Off Rate"
-        value="15.4%"
-        subtitle="Early conversation exits"
-        change="2.1%"
-        isPositive={false}
+        value={data.dropOff.value}
+        subtitle={data.dropOff.subtitle}
+        change={data.dropOff.change.replace('-', '')}
+        isPositive={data.dropOff.change.startsWith('-')}
         icon={<TrendingUp className="h-4 w-4" />}
       />
     </div>

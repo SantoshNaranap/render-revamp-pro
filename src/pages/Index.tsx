@@ -1,14 +1,18 @@
 
+import { useState } from "react"
 import { Layout } from "@/components/Layout"
 import { DashboardMetrics } from "@/components/DashboardMetrics"
 import { ActivityTimeline } from "@/components/ActivityTimeline"
 import { ConversationStatus } from "@/components/ConversationStatus"
 import { PopularTopics } from "@/components/PopularTopics"
 import { RecentActivity } from "@/components/RecentActivity"
+import { TimePeriodFilter, TimePeriod } from "@/components/TimePeriodFilter"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Download, Calendar, TrendingUp } from "lucide-react"
+import { RefreshCw, Download, TrendingUp } from "lucide-react"
 
 const Index = () => {
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('week')
+
   return (
     <Layout>
       <div className="space-y-8 animate-fade-in">
@@ -20,10 +24,7 @@ const Index = () => {
           </div>
           
           <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm" className="gap-2 bg-background/60 hover:bg-background border-border/60">
-              <Calendar className="h-4 w-4" />
-              Last 7 days
-            </Button>
+            <TimePeriodFilter value={timePeriod} onChange={setTimePeriod} />
             <Button variant="outline" size="sm" className="gap-2 bg-background/60 hover:bg-background border-border/60">
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -41,7 +42,7 @@ const Index = () => {
             <TrendingUp className="h-5 w-5 text-primary" />
             <h2 className="text-xl font-semibold text-foreground">User Interaction Analytics</h2>
           </div>
-          <DashboardMetrics />
+          <DashboardMetrics timePeriod={timePeriod} />
         </div>
 
         {/* Chatbot Performance Metrics */}
