@@ -5,7 +5,7 @@ import {
   MessageSquare, 
   Users, 
   TrendingUp, 
-  Star,
+  UserCheck,
   ArrowUpRight,
   ArrowDownRight
 } from "lucide-react"
@@ -61,35 +61,35 @@ export function DashboardMetrics() {
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
       <MetricCard
         title="Total Conversations"
-        value="1,234"
-        subtitle="89 currently active"
-        change="12.5%"
+        value="2,847"
+        subtitle="Today: 342 conversations"
+        change="18.5%"
         isPositive={true}
         icon={<MessageSquare className="h-4 w-4" />}
       />
       <MetricCard
-        title="Messages Processed"
-        value="15,678"
-        subtitle="Average 12.7 per chat"
-        change="3.2%"
-        isPositive={false}
-        icon={<TrendingUp className="h-4 w-4" />}
-      />
-      <MetricCard
-        title="Active Users"
-        value="234"
-        subtitle="456 total registered"
-        change="8.9%"
+        title="Unique Users"
+        value="1,653"
+        subtitle="Monthly active users"
+        change="12.3%"
         isPositive={true}
         icon={<Users className="h-4 w-4" />}
       />
       <MetricCard
-        title="Satisfaction Score"
-        value="4.5/5"
-        subtitle="Based on 1.2k reviews"
-        change="2.1%"
+        title="User Retention"
+        value="78.2%"
+        subtitle="7-day retention rate"
+        change="5.7%"
         isPositive={true}
-        icon={<Star className="h-4 w-4" />}
+        icon={<UserCheck className="h-4 w-4" />}
+      />
+      <MetricCard
+        title="Drop Off Rate"
+        value="15.4%"
+        subtitle="Early conversation exits"
+        change="2.1%"
+        isPositive={false}
+        icon={<TrendingUp className="h-4 w-4" />}
       />
     </div>
   )

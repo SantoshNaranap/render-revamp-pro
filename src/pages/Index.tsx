@@ -35,36 +35,52 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Key Metrics */}
-        <div className="space-y-2">
+        {/* User Interaction Analytics */}
+        <div className="space-y-6">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="h-5 w-5 text-primary" />
-            <h2 className="text-xl font-semibold text-foreground">Key Performance Metrics</h2>
+            <h2 className="text-xl font-semibold text-foreground">User Interaction Analytics</h2>
           </div>
           <DashboardMetrics />
         </div>
 
-        {/* Analytics Charts */}
-        <div className="grid gap-8 lg:grid-cols-5">
-          <div className="lg:col-span-3 space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Activity Overview</h2>
+        {/* Chatbot Performance Metrics */}
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Resolution Rate</h2>
             <ActivityTimeline />
           </div>
-          <div className="lg:col-span-2 space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Status Distribution</h2>
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Fallback Rate</h2>
             <ConversationStatus />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Escalation Rate</h2>
+            <PopularTopics />
           </div>
         </div>
 
-        {/* Insights Section */}
+        {/* User Intent and Query Metrics */}
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Popular Discussion Topics</h2>
-            <PopularTopics />
+            <h2 className="text-xl font-semibold text-foreground mb-4">Top User Queries & Categories</h2>
+            <RecentActivity />
           </div>
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Recent Platform Activity</h2>
-            <RecentActivity />
+            <h2 className="text-xl font-semibold text-foreground mb-4">Sentiment Analysis</h2>
+            <ActivityTimeline />
+          </div>
+        </div>
+
+        {/* Message Patterns */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Conversation Metrics</h2>
+            <ConversationStatus />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold text-foreground mb-4">Peak Activity & CTA Performance</h2>
+            <PopularTopics />
           </div>
         </div>
       </div>
