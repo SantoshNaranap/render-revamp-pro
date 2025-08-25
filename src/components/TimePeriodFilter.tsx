@@ -43,11 +43,13 @@ export function TimePeriodFilter({ value, onChange }: TimePeriodFilterProps) {
             "min-w-[140px] justify-between"
           )}
         >
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>{periodDescriptions[value]}</span>
-          </div>
-          <ChevronDown className="h-3 w-3 opacity-50" />
+          <>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <span>{periodDescriptions[value]}</span>
+            </div>
+            <ChevronDown className="h-3 w-3 opacity-50" />
+          </>
         </Button>
       </SelectTrigger>
       <SelectContent align="end" className="w-[180px]">
