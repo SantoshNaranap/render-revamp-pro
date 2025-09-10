@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+
+
 import { 
   Select,
   SelectContent,
@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Calendar, ChevronDown } from "lucide-react"
+import { Calendar } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export type TimePeriod = 'day' | 'week' | 'month' | 'year'
@@ -34,21 +34,14 @@ const periodDescriptions = {
 export function TimePeriodFilter({ value, onChange }: TimePeriodFilterProps) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger asChild>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className={cn(
-            "gap-2 bg-background/60 hover:bg-background border-border/60",
-            "min-w-[140px] justify-between"
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>{periodDescriptions[value]}</span>
-          </div>
-          <ChevronDown className="h-3 w-3 opacity-50" />
-        </Button>
+      <SelectTrigger className={cn(
+        "gap-2 bg-background/60 hover:bg-background border-border/60",
+        "min-w-[140px] justify-between h-9"
+      )}>
+        <div className="flex items-center gap-2">
+          <Calendar className="h-4 w-4" />
+          <span>{periodDescriptions[value]}</span>
+        </div>
       </SelectTrigger>
       <SelectContent align="end" className="w-[180px]">
         {Object.entries(periodLabels).map(([period, label]) => (
