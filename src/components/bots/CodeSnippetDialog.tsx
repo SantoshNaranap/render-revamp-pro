@@ -87,6 +87,47 @@ function App() {
   window.KaaylabsWidget.init();
 </script>`
 
+  const nextjsSnippet = `// app/components/ChatWidget.tsx (App Router)
+'use client';
+
+import { useEffect } from 'react';
+
+export default function ChatWidget() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.kaaylabs.ai/widget.js';
+    script.setAttribute('data-bot-id', '${bot.id}');
+    script.setAttribute('data-bot-name', '${bot.name}');
+    script.setAttribute('data-theme', 'light');
+    script.setAttribute('data-position', 'bottom-right');
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup on component unmount
+      const existingScript = document.querySelector('script[src="https://cdn.kaaylabs.ai/widget.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
+  return null; // Widget is injected via script
+}
+
+// app/layout.tsx - Add to your layout
+import ChatWidget from './components/ChatWidget';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <ChatWidget />
+      </body>
+    </html>
+  );
+}`
+
   const apiSnippet = `// Direct API Integration
 const response = await fetch('https://api.kaaylabs.ai/v1/chat', {
   method: 'POST',
@@ -120,9 +161,10 @@ console.log(data.response);`
         </DialogHeader>
 
         <Tabs defaultValue="javascript" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="javascript">JavaScript</TabsTrigger>
             <TabsTrigger value="react">React</TabsTrigger>
+            <TabsTrigger value="nextjs">Next.js</TabsTrigger>
             <TabsTrigger value="html">HTML</TabsTrigger>
             <TabsTrigger value="api">API</TabsTrigger>
           </TabsList>
@@ -169,6 +211,29 @@ console.log(data.response);`
               </pre>
               <p className="text-sm text-muted-foreground">
                 Install: <code className="bg-muted px-1 rounded">npm install @kaaylabs/react-widget</code>
+              </p>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="nextjs" className="space-y-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">Next.js Integration</h4>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => copyToClipboard(nextjsSnippet, 'nextjs')}
+                  className="gap-2"
+                >
+                  {copied === 'nextjs' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {copied === 'nextjs' ? 'Copied!' : 'Copy'}
+                </Button>
+              </div>
+              <pre className="bg-muted p-4 rounded-lg overflow-x-auto text-sm">
+                <code>{nextjsSnippet}</code>
+              </pre>
+              <p className="text-sm text-muted-foreground">
+                For Next.js App Router. Supports both client-side rendering and proper cleanup.
               </p>
             </div>
           </TabsContent>
