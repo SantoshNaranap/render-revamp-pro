@@ -88,8 +88,8 @@ const Index = () => {
         {/* User Intent and Query Metrics */}
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Top User Queries & Categories</h2>
-            <RecentActivity />
+            <h2 className="text-xl font-semibold text-foreground mb-4">Conversation Metrics</h2>
+            <ConversationStatus />
           </div>
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-foreground mb-4">Sentiment Analysis</h2>
@@ -100,8 +100,8 @@ const Index = () => {
         {/* Message Patterns */}
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Conversation Metrics</h2>
-            <ConversationStatus />
+            <h2 className="text-xl font-semibold text-foreground mb-4">Top User Queries & Categories</h2>
+            <RecentActivity />
           </div>
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-foreground mb-4">Peak Activity & CTA Performance</h2>
