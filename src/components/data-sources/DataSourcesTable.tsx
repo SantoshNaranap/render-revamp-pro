@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -10,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { FileText, Globe, Zap, MoreHorizontal, Eye, Trash2, RefreshCw } from "lucide-react"
+import { FileText, Globe, Zap, MoreHorizontal, Eye, Trash2, RefreshCw, Clock } from "lucide-react"
 import { useState } from "react"
 import { DataSourceStatusModal } from "./DataSourceStatusModal"
 
@@ -24,6 +25,7 @@ export interface DataSource {
   type: "pdf" | "text" | "web" | "api"
   size: string
   accuracy?: number
+  scrapeFrequency?: "hourly" | "daily" | "weekly" | "monthly"
 }
 
 const mockDataSources: DataSource[] = [
@@ -57,7 +59,8 @@ const mockDataSources: DataSource[] = [
     documentCount: 234,
     lastUpdated: "2024-01-16",
     type: "web",
-    size: "78.9 MB"
+    size: "78.9 MB",
+    scrapeFrequency: "daily"
   },
   {
     id: "4",
@@ -117,13 +120,39 @@ const getStatusBadge = (status: string) => {
 }
 
 export function DataSourcesTable() {
-  const [dataSources] = useState<DataSource[]>(mockDataSources)
+  const [dataSources, setDataSources] = useState<DataSource[]>(mockDataSources)
   const [selectedDataSource, setSelectedDataSource] = useState<DataSource | null>(null)
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false)
 
   const handleViewStatus = (dataSource: DataSource) => {
     setSelectedDataSource(dataSource)
     setIsStatusModalOpen(true)
+  }
+
+  const handleFrequencyChange = (dataSourceId: string, frequency: string) => {
+    setDataSources(prev => prev.map(ds => 
+      ds.id === dataSourceId 
+        ? { ...ds, scrapeFrequency: frequency as DataSource['scrapeFrequency'] }
+        : ds
+    ))
+  }
+
+  const getFrequencyBadge = (frequency?: string) => {
+    if (!frequency) return null
+    
+    const colors = {
+      hourly: "bg-red-500/10 text-red-400 border-red-500/30",
+      daily: "bg-blue-500/10 text-blue-400 border-blue-500/30", 
+      weekly: "bg-green-500/10 text-green-400 border-green-500/30",
+      monthly: "bg-purple-500/10 text-purple-400 border-purple-500/30"
+    }
+    
+    return (
+      <Badge className={colors[frequency as keyof typeof colors] || "bg-gray-500/10 text-gray-400 border-gray-500/30"}>
+        <Clock className="w-3 h-3 mr-1" />
+        {frequency}
+      </Badge>
+    )
   }
 
   return (
@@ -142,6 +171,7 @@ export function DataSourcesTable() {
                 <TableHead>Documents</TableHead>
                 <TableHead>Size</TableHead>
                 <TableHead>Accuracy</TableHead>
+                <TableHead>Frequency</TableHead>
                 <TableHead>Last Updated</TableHead>
                 <TableHead className="w-[100px]">Actions</TableHead>
               </TableRow>
@@ -175,6 +205,26 @@ export function DataSourcesTable() {
                   <TableCell>
                     {dataSource.accuracy ? (
                       <span className="text-green-400 font-medium">{dataSource.accuracy}%</span>
+                    ) : (
+                      <span className="text-muted-foreground">-</span>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {dataSource.type === "web" ? (
+                      <Select
+                        value={dataSource.scrapeFrequency}
+                        onValueChange={(value) => handleFrequencyChange(dataSource.id, value)}
+                      >
+                        <SelectTrigger className="w-[120px] h-8">
+                          <SelectValue placeholder="Set frequency" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="hourly">Hourly</SelectItem>
+                          <SelectItem value="daily">Daily</SelectItem>
+                          <SelectItem value="weekly">Weekly</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                        </SelectContent>
+                      </Select>
                     ) : (
                       <span className="text-muted-foreground">-</span>
                     )}
