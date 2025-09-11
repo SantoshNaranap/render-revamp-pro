@@ -24,7 +24,6 @@ export interface DataSource {
   lastUpdated: string
   type: "pdf" | "text" | "web" | "api"
   size: string
-  accuracy?: number
   scrapeFrequency?: "hourly" | "daily" | "weekly" | "monthly"
 }
 
@@ -37,8 +36,7 @@ const mockDataSources: DataSource[] = [
     documentCount: 156,
     lastUpdated: "2024-01-15",
     type: "pdf",
-    size: "45.2 MB",
-    accuracy: 94.5
+    size: "45.2 MB"
   },
   {
     id: "2",
@@ -48,8 +46,7 @@ const mockDataSources: DataSource[] = [
     documentCount: 89,
     lastUpdated: "2024-01-14",
     type: "text",
-    size: "12.8 MB",
-    accuracy: 91.2
+    size: "12.8 MB"
   },
   {
     id: "3",
@@ -70,8 +67,7 @@ const mockDataSources: DataSource[] = [
     documentCount: 67,
     lastUpdated: "2024-01-13",
     type: "api",
-    size: "23.4 MB",
-    accuracy: 96.8
+    size: "23.4 MB"
   },
   {
     id: "5",
@@ -91,8 +87,7 @@ const mockDataSources: DataSource[] = [
     documentCount: 34,
     lastUpdated: "2024-01-11",
     type: "text",
-    size: "8.9 MB",
-    accuracy: 89.3
+    size: "8.9 MB"
   }
 ]
 
@@ -170,7 +165,6 @@ export function DataSourcesTable() {
                 <TableHead>Status</TableHead>
                 <TableHead>Documents</TableHead>
                 <TableHead>Size</TableHead>
-                <TableHead>Accuracy</TableHead>
                 <TableHead>Frequency</TableHead>
                 <TableHead>Last Updated</TableHead>
                 <TableHead className="w-[100px]">Actions</TableHead>
@@ -201,13 +195,6 @@ export function DataSourcesTable() {
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     {dataSource.size}
-                  </TableCell>
-                  <TableCell>
-                    {dataSource.accuracy ? (
-                      <span className="text-green-400 font-medium">{dataSource.accuracy}%</span>
-                    ) : (
-                      <span className="text-muted-foreground">-</span>
-                    )}
                   </TableCell>
                   <TableCell>
                     {dataSource.type === "web" ? (
