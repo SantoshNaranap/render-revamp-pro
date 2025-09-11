@@ -8,6 +8,7 @@ import { ConversationFlow } from "@/components/ConversationFlow"
 import { SessionTimeline } from "@/components/SessionTimeline"
 import { ActivityTimeline } from "@/components/ActivityTimeline"
 import { ConversationStatus } from "@/components/ConversationStatus"
+import SentimentAnalysis from "@/components/SentimentAnalysis"
 import { PopularTopics } from "@/components/PopularTopics"
 import { RecentActivity } from "@/components/RecentActivity"
 import { TimePeriodFilter, TimePeriod } from "@/components/TimePeriodFilter"
@@ -92,8 +93,8 @@ const Index = () => {
             <ConversationStatus />
           </div>
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Activity Trends</h2>
-            <ActivityTimeline />
+            <h2 className="text-xl font-semibold text-foreground mb-4">Sentiment Analysis</h2>
+            <SentimentAnalysis timePeriod={timePeriod} />
           </div>
         </div>
 
