@@ -136,6 +136,7 @@ export function DataSourcesTable() {
   }
 
   const handleTimeChange = (dataSourceId: string, time: string) => {
+    console.log('Time change triggered:', dataSourceId, time)
     setDataSources(prev => prev.map(ds => 
       ds.id === dataSourceId 
         ? { ...ds, scrapeTime: time }
@@ -225,13 +226,22 @@ export function DataSourcesTable() {
                           </SelectContent>
                         </Select>
                         {dataSource.scrapeFrequency && (
-                          <Input
-                            type="time"
-                            value={dataSource.scrapeTime || ""}
-                            onChange={(e) => handleTimeChange(dataSource.id, e.target.value)}
-                            className="w-[100px] h-8"
-                            placeholder="Time"
-                          />
+                          <div onClick={(e) => e.stopPropagation()} className="inline-block">
+                            <Input
+                              type="time"
+                              value={dataSource.scrapeTime || ""}
+                              onChange={(e) => {
+                                console.log('Input onChange fired:', e.target.value)
+                                handleTimeChange(dataSource.id, e.target.value)
+                              }}
+                              className="w-[120px] h-8 cursor-pointer"
+                              placeholder="Time"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                console.log('Time input clicked')
+                              }}
+                            />
+                          </div>
                         )}
                       </div>
                     ) : (
