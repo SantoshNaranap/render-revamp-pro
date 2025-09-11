@@ -92,7 +92,7 @@ const Index = () => {
             <ConversationStatus />
           </div>
           <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Sentiment Analysis</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-4">Activity Trends</h2>
             <ActivityTimeline />
           </div>
         </div>
