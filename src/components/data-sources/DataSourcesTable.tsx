@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ export interface DataSource {
   type: "pdf" | "text" | "web" | "api"
   size: string
   scrapeFrequency?: "hourly" | "daily" | "weekly" | "monthly"
+  scrapeTime?: string
 }
 
 const mockDataSources: DataSource[] = [
@@ -57,7 +59,8 @@ const mockDataSources: DataSource[] = [
     lastUpdated: "2024-01-16",
     type: "web",
     size: "78.9 MB",
-    scrapeFrequency: "daily"
+    scrapeFrequency: "daily",
+    scrapeTime: "02:00"
   },
   {
     id: "4",
@@ -132,6 +135,14 @@ export function DataSourcesTable() {
     ))
   }
 
+  const handleTimeChange = (dataSourceId: string, time: string) => {
+    setDataSources(prev => prev.map(ds => 
+      ds.id === dataSourceId 
+        ? { ...ds, scrapeTime: time }
+        : ds
+    ))
+  }
+
   const getFrequencyBadge = (frequency?: string) => {
     if (!frequency) return null
     
@@ -198,20 +209,31 @@ export function DataSourcesTable() {
                   </TableCell>
                   <TableCell>
                     {dataSource.type === "web" ? (
-                      <Select
-                        value={dataSource.scrapeFrequency}
-                        onValueChange={(value) => handleFrequencyChange(dataSource.id, value)}
-                      >
-                        <SelectTrigger className="w-[120px] h-8">
-                          <SelectValue placeholder="Set frequency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="hourly">Hourly</SelectItem>
-                          <SelectItem value="daily">Daily</SelectItem>
-                          <SelectItem value="weekly">Weekly</SelectItem>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex gap-2">
+                        <Select
+                          value={dataSource.scrapeFrequency}
+                          onValueChange={(value) => handleFrequencyChange(dataSource.id, value)}
+                        >
+                          <SelectTrigger className="w-[100px] h-8">
+                            <SelectValue placeholder="Frequency" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="hourly">Hourly</SelectItem>
+                            <SelectItem value="daily">Daily</SelectItem>
+                            <SelectItem value="weekly">Weekly</SelectItem>
+                            <SelectItem value="monthly">Monthly</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {dataSource.scrapeFrequency && (
+                          <Input
+                            type="time"
+                            value={dataSource.scrapeTime || ""}
+                            onChange={(e) => handleTimeChange(dataSource.id, e.target.value)}
+                            className="w-[100px] h-8"
+                            placeholder="Time"
+                          />
+                        )}
+                      </div>
                     ) : (
                       <span className="text-muted-foreground">-</span>
                     )}
