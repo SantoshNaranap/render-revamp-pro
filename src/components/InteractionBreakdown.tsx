@@ -76,6 +76,31 @@ export function InteractionBreakdown({ timePeriod }: InteractionBreakdownProps) 
     return null
   }
 
+  const CustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, percent }: any) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius + 30;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="hsl(var(--foreground))"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+        className="text-sm font-medium"
+        style={{ 
+          fontSize: "12px", 
+          fontWeight: "500",
+          filter: "drop-shadow(0 1px 2px hsl(var(--background)/0.8))"
+        }}
+      >
+        {`${name}: ${(percent * 100).toFixed(1)}%`}
+      </text>
+    );
+  };
+
   return (
     <Card className="border-border/60 bg-card/40 backdrop-blur-sm">
       <CardHeader>
@@ -92,7 +117,7 @@ export function InteractionBreakdown({ timePeriod }: InteractionBreakdownProps) 
                 outerRadius={100}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
+                label={<CustomLabel />}
                 labelLine={false}
               >
                 {data.map((entry, index) => (
