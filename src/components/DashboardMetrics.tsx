@@ -99,15 +99,7 @@ export function DashboardMetrics({ timePeriod }: DashboardMetricsProps) {
   const data = getMetricData()
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      <MetricCard
-        title="Total Conversations"
-        value={data.conversations.value}
-        subtitle={data.conversations.subtitle}
-        change={data.conversations.change}
-        isPositive={true}
-        icon={<MessageSquare className="h-4 w-4" />}
-      />
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <MetricCard
         title="Unique Users"
         value={data.users.value}
