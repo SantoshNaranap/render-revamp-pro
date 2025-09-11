@@ -74,14 +74,10 @@ const Index = () => {
         </div>
 
         {/* Chatbot Performance Metrics */}
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-foreground mb-4">Resolution Rate</h2>
             <ActivityTimeline />
-          </div>
-          <div className="space-y-2">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Fallback Rate</h2>
-            <ConversationStatus />
           </div>
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-foreground mb-4">Escalation Rate</h2>
