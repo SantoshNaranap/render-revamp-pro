@@ -21,7 +21,6 @@ interface Conversation {
   sentiment: 'positive' | 'negative' | 'neutral'
   summary: string
   intent: string
-  leadCaptured: boolean
   hasGap: boolean
   timeAgo: string
   messageCount: number
@@ -37,7 +36,6 @@ const mockConversations: Conversation[] = [
     sentiment: 'positive',
     summary: 'Asked about MBA program requirements and application deadlines',
     intent: 'Product Inquiry',
-    leadCaptured: true,
     hasGap: false,
     timeAgo: '2 hours ago',
     messageCount: 8,
@@ -56,7 +54,6 @@ const mockConversations: Conversation[] = [
     sentiment: 'negative',
     summary: 'Frustrated about refund policy, left without resolution',
     intent: 'Refund Request',
-    leadCaptured: false,
     hasGap: false,
     timeAgo: '3 hours ago',
     messageCount: 3,
@@ -74,7 +71,6 @@ const mockConversations: Conversation[] = [
     sentiment: 'positive',
     summary: 'Booked a campus tour for next week',
     intent: 'Campus Tour',
-    leadCaptured: true,
     hasGap: false,
     timeAgo: '5 hours ago',
     messageCount: 5,
@@ -91,7 +87,6 @@ const mockConversations: Conversation[] = [
     sentiment: 'neutral',
     summary: "Asked about financial aid, bot couldn't provide specific info",
     intent: 'Unknown',
-    leadCaptured: false,
     hasGap: true,
     timeAgo: '6 hours ago',
     messageCount: 2,
@@ -215,12 +210,6 @@ export function ConversationsTab() {
                     <p className="text-sm text-muted-foreground truncate">{conv.summary}</p>
                     <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                       <span>Intent: <span className="font-medium text-foreground">{conv.intent}</span></span>
-                      {conv.leadCaptured && (
-                        <span className="flex items-center gap-1 text-emerald-600">
-                          <CheckCircle className="h-3 w-3" />
-                          Lead captured
-                        </span>
-                      )}
                       {conv.sentiment === 'positive' && (
                         <span className="flex items-center gap-1 text-emerald-600">
                           <ThumbsUp className="h-3 w-3" />
@@ -264,12 +253,6 @@ export function ConversationsTab() {
               <div className="flex items-center gap-2 text-sm">
                 <span className="text-muted-foreground">Intent:</span>
                 <span className="font-medium">{selectedConversation.intent}</span>
-                {selectedConversation.leadCaptured && (
-                  <span className="flex items-center gap-1 text-emerald-600">
-                    <CheckCircle className="h-3 w-3" />
-                    Lead captured
-                  </span>
-                )}
               </div>
             </div>
 
