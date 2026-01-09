@@ -25,6 +25,15 @@ import KnowledgeGaps from "./pages/student/KnowledgeGaps";
 import ExamReadiness from "./pages/student/ExamReadiness";
 import StudentProgress from "./pages/student/StudentProgress";
 
+// Faculty Pages
+import FacultyDashboard from "./pages/faculty/FacultyDashboard";
+import FacultyCourses from "./pages/faculty/FacultyCourses";
+import ContentLibrary from "./pages/faculty/ContentLibrary";
+import LearningOutcomes from "./pages/faculty/LearningOutcomes";
+import Assessments from "./pages/faculty/Assessments";
+import StudentInsights from "./pages/faculty/StudentInsights";
+import BotConfiguration from "./pages/faculty/BotConfiguration";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -35,13 +44,24 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {/* Root redirects to admin */}
-            <Route path="/" element={<Navigate to="/admin/analytics" replace />} />
+            {/* Root redirects to faculty */}
+            <Route path="/" element={<Navigate to="/faculty/dashboard" replace />} />
             
-            {/* Admin Routes (preserved existing functionality) */}
+            {/* Faculty Portal Routes */}
+            <Route path="/faculty" element={<Navigate to="/faculty/dashboard" replace />} />
+            <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
+            <Route path="/faculty/courses" element={<FacultyCourses />} />
+            <Route path="/faculty/content" element={<ContentLibrary />} />
+            <Route path="/faculty/outcomes" element={<LearningOutcomes />} />
+            <Route path="/faculty/assessments" element={<Assessments />} />
+            <Route path="/faculty/insights" element={<StudentInsights />} />
+            <Route path="/faculty/bot-config" element={<BotConfiguration />} />
+            <Route path="/faculty/settings" element={<Settings />} />
+            <Route path="/faculty/help" element={<Help />} />
+            
+            {/* Admin Routes (preserved) */}
             <Route path="/admin" element={<Navigate to="/admin/analytics" replace />} />
             <Route path="/admin/analytics" element={<Index />} />
-            <Route path="/admin/chat" element={<Index />} />
             <Route path="/admin/bots" element={<Bots />} />
             <Route path="/admin/playground" element={<Playground />} />
             <Route path="/admin/data-sources" element={<DataSources />} />
@@ -51,7 +71,7 @@ const App = () => (
             <Route path="/admin/profile" element={<Profile />} />
             <Route path="/admin/help" element={<Help />} />
             
-            {/* Student Routes (new student portal) */}
+            {/* Student Routes */}
             <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
             <Route path="/student/dashboard" element={<StudentDashboard />} />
             <Route path="/student/courses" element={<StudentCourses />} />
@@ -61,12 +81,6 @@ const App = () => (
             <Route path="/student/progress" element={<StudentProgress />} />
             <Route path="/student/profile" element={<Profile />} />
             <Route path="/student/help" element={<Help />} />
-            
-            {/* Legacy routes redirect to admin */}
-            <Route path="/analytics" element={<Navigate to="/admin/analytics" replace />} />
-            <Route path="/bots" element={<Navigate to="/admin/bots" replace />} />
-            <Route path="/playground" element={<Navigate to="/admin/playground" replace />} />
-            <Route path="/data-sources" element={<Navigate to="/admin/data-sources" replace />} />
             
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
