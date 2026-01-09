@@ -15,6 +15,7 @@ import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import Guide from "./pages/Guide";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/data-sources/add" element={<AddDataSource />} />
             <Route path="/guide" element={<Guide />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/help" element={<Help />} />
             <Route path="/login" element={<Login />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
