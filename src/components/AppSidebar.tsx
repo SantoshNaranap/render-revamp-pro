@@ -9,7 +9,8 @@ import {
   Sparkles,
   HelpCircle,
   ChevronDown,
-  Bot
+  Bot,
+  User
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
 
@@ -66,12 +67,12 @@ const dataItems = [
 ]
 
 const adminItems = [
-  // { 
-  //   title: "Settings", 
-  //   url: "/settings", 
-  //   icon: Settings,
-  //   badge: null
-  // },
+  { 
+    title: "Profile", 
+    url: "/profile", 
+    icon: User,
+    badge: null
+  },
   { 
     title: "Help", 
     url: "/help", 
