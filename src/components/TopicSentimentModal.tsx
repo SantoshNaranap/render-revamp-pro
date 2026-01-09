@@ -1,7 +1,8 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { ThumbsUp, ThumbsDown, Minus, MessageSquare, TrendingUp } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { ThumbsUp, ThumbsDown, Minus, MessageSquare, TrendingUp, ArrowRight } from "lucide-react"
 
 interface TopicSentimentModalProps {
   open: boolean
@@ -11,6 +12,7 @@ interface TopicSentimentModalProps {
     count: number
     category: string
   } | null
+  onGoToConversations?: (topicName: string) => void
 }
 
 const topicSentimentData: Record<string, {
@@ -119,7 +121,7 @@ const topicSentimentData: Record<string, {
   }
 }
 
-export function TopicSentimentModal({ open, onOpenChange, topic }: TopicSentimentModalProps) {
+export function TopicSentimentModal({ open, onOpenChange, topic, onGoToConversations }: TopicSentimentModalProps) {
   if (!topic) return null
 
   const sentiment = topicSentimentData[topic.name] || {
@@ -219,6 +221,20 @@ export function TopicSentimentModal({ open, onOpenChange, topic }: TopicSentimen
               ))}
             </div>
           </div>
+
+          {/* Go to Conversations Button */}
+          {onGoToConversations && (
+            <Button 
+              onClick={() => {
+                onGoToConversations(topic.name)
+                onOpenChange(false)
+              }}
+              className="w-full"
+            >
+              View Related Conversations
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          )}
         </div>
       </DialogContent>
     </Dialog>

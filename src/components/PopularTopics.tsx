@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, Hash } from "lucide-react"
@@ -16,12 +17,17 @@ const topics = [
 ]
 
 export function PopularTopics() {
+  const navigate = useNavigate()
   const [selectedTopic, setSelectedTopic] = useState<typeof topics[0] | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
 
   const handleTopicClick = (topic: typeof topics[0]) => {
     setSelectedTopic(topic)
     setModalOpen(true)
+  }
+
+  const handleGoToConversations = (topicName: string) => {
+    navigate("/?tab=conversations")
   }
 
   return (
@@ -69,6 +75,7 @@ export function PopularTopics() {
         open={modalOpen}
         onOpenChange={setModalOpen}
         topic={selectedTopic}
+        onGoToConversations={handleGoToConversations}
       />
     </>
   )
