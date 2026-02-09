@@ -12,9 +12,10 @@ import { PopularTopics } from "@/components/PopularTopics"
 import { RecentActivity } from "@/components/RecentActivity"
 import { TimePeriodFilter, TimePeriod } from "@/components/TimePeriodFilter"
 import { ConversationsTab } from "@/components/analytics/ConversationsTab"
+import { UserHeatmap } from "@/components/analytics/UserHeatmap"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Download, TrendingUp, Activity, BarChart3 } from "lucide-react"
+import { RefreshCw, Download, TrendingUp, Activity, BarChart3, MapPin } from "lucide-react"
 
 const Index = () => {
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('week')
@@ -63,6 +64,12 @@ const Index = () => {
               className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 text-muted-foreground data-[state=active]:text-primary font-medium"
             >
               Knowledge Gaps
+            </TabsTrigger>
+            <TabsTrigger 
+              value="heatmap"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none px-0 pb-3 text-muted-foreground data-[state=active]:text-primary font-medium"
+            >
+              Heatmap
             </TabsTrigger>
             <TabsTrigger 
               value="intents"
@@ -151,6 +158,10 @@ const Index = () => {
             <div className="flex items-center justify-center h-64 text-muted-foreground">
               Knowledge Gaps analysis coming soon...
             </div>
+          </TabsContent>
+
+          <TabsContent value="heatmap" className="mt-8">
+            <UserHeatmap />
           </TabsContent>
 
           <TabsContent value="intents" className="mt-8">
